@@ -6,29 +6,23 @@
 
 class Solution {
     public int solution(int[] A) {
-        if (A == null || A.length < 2) return 0;
-
-        int sum = calcSum(A);
-
-        int minDiff = 2*A[0] - sum;
-        int absMinDiff = Math.abs(minDiff);
-
-        int currDiff = minDiff;
-
-        for(int i = 1; i < A.length-1; i++){
-            currDiff += 2*A[i];
-            int t = Math.abs(currDiff);
-            if (t < absMinDiff)
-                absMinDiff = t;
-            if (absMinDiff == 0) return absMinDiff;
+        int totalSum = 0;
+        for(int i =0; i<A.length; i++){
+            totalSum += A[i];
         }
-        return absMinDiff;
-    }
-    public int calcSum(int[] A){
-        int sum = 0;
-        for(int i = 0; i< A.length; i++){
-            sum+=A[i];
+        //System.out.println("sum: " + totalSum);
+        int currDiff = totalSum-(2*A[0]);
+        int minDiff = Math.abs(currDiff);
+        //System.out.println("currDiff: " + currDiff);
+        for(int i=1; i<A.length-1; i++){
+            currDiff -= 2*A[i];
+            //System.out.println("currDiff: " + currDiff);
+            if(Math.abs(currDiff) < minDiff){
+                if(currDiff == 0)
+                    return 0;
+                minDiff=Math.abs(currDiff);
+            }
         }
-        return sum;
+        return minDiff;
     }
 }
